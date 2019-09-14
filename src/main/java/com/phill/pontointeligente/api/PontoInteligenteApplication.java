@@ -10,4 +10,7 @@ public class PontoInteligenteApplication {
 		SpringApplication.run(PontoInteligenteApplication.class, args);
 	}
 
+	
+//teste de commit	
+	
 }
