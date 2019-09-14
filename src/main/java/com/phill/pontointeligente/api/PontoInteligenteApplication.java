@@ -11,6 +11,4 @@ public class PontoInteligenteApplication {
 	}
 
 	
-//teste de commit11111	
-	
 }
