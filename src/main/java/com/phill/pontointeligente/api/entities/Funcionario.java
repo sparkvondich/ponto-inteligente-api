@@ -5,10 +5,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -95,48 +101,70 @@ public class Funcionario {
 	}
 	
 	@Transient
-	public Optional<Float> getgetQtdHorasTrabalhoDia(){
+	public Optional<Float> getQtdHorasTrabalhoDiaOpt(){
 		return Optional.ofNullable(qtdHorasTrabalhoDia);
 	}
 	
 	public void setQtdHorasTrabalhoDia(Float qtdHorasTrabalhoDia) {
 		this.qtdHorasTrabalhoDia = qtdHorasTrabalhoDia;
 	}
+	@Column(name = "qtd_horas_almoco" , nullable = true)
 	public Float getQtdHorasAlmoco() {
 		return qtdHorasAlmoco;
+	}	
+	
+	@Transient
+	public Optional<Float> getQtdHorasAlmocoOpt(){
+		return Optional.ofNullable(qtdHorasAlmoco);
 	}
+	
 	public void setQtdHorasAlmoco(Float qtdHorasAlmoco) {
 		this.qtdHorasAlmoco = qtdHorasAlmoco;
 	}
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="perfil", nullable = false)
 	public PerfilEnum getPerfil() {
 		return perfil;
 	}
 	public void setPerfil(PerfilEnum perfil) {
 		this.perfil = perfil;
 	}
+	@Column(name="data_criacao", nullable = false)
 	public Date getDataCriacao() {
 		return dataCriacao;
 	}
 	public void setDataCriacao(Date dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
+	@Column(name="data_atualizacao", nullable = false)
 	public Date getDataAtualizacao() {
 		return dataAtualizacao;
 	}
 	public void setDataAtualizacao(Date dataAtualizacao) {
 		this.dataAtualizacao = dataAtualizacao;
 	}
+	@ManyToOne(fetch = FetchType.EAGER)
 	public Empresa getEmpresa() {
 		return empresa;
 	}
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
 	}
+	@OneToMany(mappedBy="funcionario",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	public List<Lancamento> getLancamentos() {
 		return lancamentos;
 	}
 	public void setLancamentos(List<Lancamento> lancamentos) {
 		this.lancamentos = lancamentos;
+	}
+
+	@Override
+	public String toString() {
+		return "Funcionario [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", cpf=" + cpf
+				+ ", valorHora=" + valorHora + ", qtdHorasTrabalhoDia=" + qtdHorasTrabalhoDia + ", qtdHorasAlmoco="
+				+ qtdHorasAlmoco + ", perfil=" + perfil + ", dataCriacao=" + dataCriacao + ", dataAtualizacao="
+				+ dataAtualizacao + ", empresa=" + empresa + "]";
 	}
 	
 	
